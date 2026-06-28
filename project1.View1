@@ -1,0 +1,118 @@
+<mvc:View xmlns:form="sap.ui.layout.form" controllerName="com.ui5.training.project1.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="page" >
+
+    <IconTabBar
+        id="idIconTabBarMulti"
+        expanded="{device>/isNoPhone}"
+        class="sapUiResponsiveContentPadding">
+        <items>
+
+        
+            <IconTabFilter
+                icon="sap-icon://table-view"
+                key="attachments"
+                text="Table">
+                <Table items="{/tableData}">
+    <columns>
+        <Column>
+            <Text text="Name" />
+        </Column>
+        <Column>
+            <Text text="Info" />
+        </Column>
+        <Column>
+            <Text text="Cohort_Code" />
+        </Column>
+    </columns>
+    <items>
+        <ColumnListItem>
+            <cells>
+                <Text text="{name}" />
+                <Text text="{info}" />
+                <Text text="{Cohort_Code}" />
+            </cells>
+        </ColumnListItem>
+    </items>
+</Table>
+
+                
+            </IconTabFilter>
+
+            <IconTabFilter
+                icon="sap-icon://list"
+                key="notes" 
+                text="List">
+                <!-- <List id="orderedList" items="{/listData}">
+    <CustomListItem>
+        <HBox>
+            <Text text="{index}. " />
+            <Text text="{name}" />
+        </HBox>
+    </CustomListItem>
+</List> -->
+    <List
+        headerText="List Items" >
+        <ActionListItem text="Reject" />
+        <ActionListItem text="Accept" />
+        <ActionListItem text="Email" />
+        <ActionListItem text="Forward" />
+        <ActionListItem text="Delete" />
+    </List>
+
+                    
+                
+               
+            </IconTabFilter>
+
+     <IconTabFilter icon="sap-icon://form" key="people" text="Form">
+        <form:SimpleForm id="mForm"
+    title="{i18n>title}"
+    editable="true"
+    layout="ResponsiveGridLayout">
+
+    <Label text="Name" />
+    <Input id="nam" placeholder="enter name"  />
+
+    <Label text="Email" />
+    <Input id="em" type="Email" placeholder="enter email" />
+
+
+    <Button text="Submit" press="onSubmits" />
+    </form:SimpleForm>
+
+    </IconTabFilter>
+
+            <IconTabFilter icon="sap-icon://form" key="people" text="Language form">
+                <form:SimpleForm id="myForm"
+    title="{i18n>title}"
+    editable="true"
+    layout="ResponsiveGridLayout"
+                >
+
+                  <Label text="Select Language"/>
+            <Select id="languageSelect" change="onLanguageChange" >
+                <items>
+                    <core:Item key="en" text="Default (English)"/>
+                    <core:Item key="fr" text="French"/>
+                    <core:Item key="es" text="Spanish"/>
+                    <core:Item key="hi" text="Hindi" />
+                </items>
+            </Select> 
+
+                <Label text="{i18n>name}" />
+    <Input id="nameInput" placeholder="{i18n>namePlaceholder}" />
+
+    <Label text="{i18n>email}" />
+    <Input id="emailInput" type="Email" placeholder="{i18n>emailPlaceholder}" />
+
+
+    <Button text="{i18n>submit}" press="onSubmit" /></form:SimpleForm>
+            </IconTabFilter>
+        </items>
+    </IconTabBar>
+ </Page>
+  </mvc:View>
+

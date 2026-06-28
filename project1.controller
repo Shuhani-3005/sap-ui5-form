@@ -1,0 +1,82 @@
+sap.ui.define([
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox",
+    "sap/ui/model/resource/ResourceModel" 
+], (Controller, MessageToast, JSONModel, MessageBox, ResourceModel) => {
+    "use strict";
+
+    return Controller.extend("com.ui5.training.project1.controller.View1", {
+        onInit(){
+
+            var sLang = sap.ui.getCore().getConfiguration().getLanguage(); // Get default language
+            console.log("Detected Language:", sLang);
+        
+            var oResourceModel = new sap.ui.model.resource.ResourceModel({
+                bundleName: "com.ui5.training.project1.i18n.i18n",
+                bundleLocale: sLang  // Load translation based on detected language
+            });
+        
+            this.getView().setModel(oResourceModel, "i18n");
+
+            var oData = {
+                // listData: [
+                //     { index: 1, name: "First Item" },
+                //     { index: 2, name: "Second Item" },
+                //     { index: 3, name: "Third Item" }
+                // ],
+                tableData:[
+                    {name:"Shuhani", info:"2103021", Cohort_Code:"018"},
+                    {name:"honey", info:"2103024", Cohort_Code:"017"}
+                ]
+            }
+            var oModel=new JSONModel(oData);
+            this.getView().setModel(oModel);
+
+        },
+
+        
+        onSubmits:function(){
+            var oName=this.byId("nam").getValue();
+            var oEmail=this.byId("em").getValue();
+
+            if(!oName || !oEmail){
+                MessageBox.error("Fill all details");
+            }else{
+                MessageBox.success("Submitted Successfully");
+            }
+
+        },
+
+        onSubmit: function () {
+            var oBundle = this.getView().getModel("i18n").getResourceBundle(); //  Get i18n bundle
+            var oName = this.byId("nameInput").getValue();
+            var oEmail = this.byId("emailInput").getValue();
+        
+            if (!oName || !oEmail) {
+                MessageBox.error(oBundle.getText("fillDetails")); // Use i18n key for error message
+            } else {
+                MessageBox.success(oBundle.getText("submittedSuccess")); //  Use i18n key for success message
+            }
+        },
+
+        setLanguage: function (sLang) {
+            sap.ui.getCore().getConfiguration().setLanguage(sLang);
+            
+            // Reload the i18n resource model with new language
+            var oResourceModel = new ResourceModel({
+                bundleName: "com.ui5.training.project1.i18n.i18n",
+                bundleLocale: sLang
+            });
+
+            this.getView().setModel(oResourceModel, "i18n");
+            MessageToast.show("Language changed to: " + sLang);
+        },
+
+        // Detect dropdown language change and apply it
+        onLanguageChange: function (oEvent) {
+            var sSelectedLang = oEvent.getSource().getSelectedKey();
+            this.setLanguage(sSelectedLang);
+        }
+}); });
